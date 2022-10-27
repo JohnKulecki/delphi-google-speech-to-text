@@ -28,7 +28,7 @@ type
  TGoogleRequest = class
     constructor create;
     destructor destroy;
-    function getToken(PEMFile: String; Exp: Integer): String;
+    function getToken(PEMFile: String; Expired: Integer): String;
     function getSpeechToText(WAVBase64, Token, encoding, rate, language: String): String;
    private
     RequestClient: TNetHTTPClient;
@@ -102,7 +102,7 @@ begin
  end;
 end;
 
-function TGoogleRequest.getToken(PEMFile: String; Exp: Integer): String;
+function TGoogleRequest.getToken(PEMFile: String; Expired: Integer): String;
 var
  Sonuc: String;
  RequestBody, InfoText: TStringList;
@@ -117,7 +117,7 @@ begin
     serviceMail := rJson.GetValue<string>('client_email');
     scope := 'https://www.googleapis.com/auth/cloud-platform';
     Aud := 'https://www.googleapis.com/oauth2/v4/token';
-    Exp := Exp;
+    Exp := Expired;
     PEMFilePath := PEMFile;
 
     RequestBody := TStringList.Create;
